@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@if (Session["UserId"] != null)
+{
+    <h4> Hello @Session["Username"].ToString()</h4>
+    <h4> Hello @Session["UserId"].ToString()</h4>
+    <h4> Hello @Session["TeacherName"].ToString()</h4>
+
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LogedinTeacher</title>
+</head>
+<body>
+    <div>
+        
+        <a href="@Url.Action("LatestUpdates","Admin")" class="btn btn-warning">Latest Update</a>
+        <a href="@Url.Action("RegisterStudent", "Admin")" class="btn btn-danger">Register Student</a>
+    </div>
+</body>
+</html>

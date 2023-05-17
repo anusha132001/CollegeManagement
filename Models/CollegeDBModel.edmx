@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CollegeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdminName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AdminPassword" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="RollNumber" />
+          </Key>
+          <Property Name="RollNumber" Type="int" Nullable="false" />
+          <Property Name="StudentName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Section" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="bigint" Nullable="false" />
+          <Property Name="DoorNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Area" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pincode" Type="int" Nullable="false" />
+          <Property Name="StudentFee" Type="float" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StudentPassword" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedAdmin" Type="int" />
+          <Property Name="CreatedTeacher" Type="int" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="bigint" Nullable="false" />
+          <Property Name="DoorNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Street" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Area" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pincode" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TeacherPassword" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Creationdate" Type="datetime" />
+          <Property Name="Createdby" Type="int" />
+        </EntityType>
+        <EntityType Name="Updates">
+          <Key>
+            <PropertyRef Name="UpdatesId" />
+          </Key>
+          <Property Name="UpdatesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="Information" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="Updatedby" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="AdminId" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="CreatedAdmin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdminId">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="AdminId" />
+            </Principal>
+            <Dependent Role="Teacher">
+              <PropertyRef Name="Createdby" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="CreatedTeacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CollegeDBModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Updates" EntityType="Self.Updates" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Admin" Association="Self.FK_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdminId" Association="Self.FK_AdminId">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="Teacher" EntitySet="Teacher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher" Association="Self.FK_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CollegeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdminName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AdminPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Students" Relationship="Self.FK_Admin" FromRole="Admin" ToRole="Student" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK_AdminId" FromRole="Admin" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="RollNumber" />
+          </Key>
+          <Property Name="RollNumber" Type="Int32" Nullable="false" />
+          <Property Name="StudentName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Section" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int64" Nullable="false" />
+          <Property Name="DoorNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Area" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pincode" Type="Int32" Nullable="false" />
+          <Property Name="StudentFee" Type="Double" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StudentPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedAdmin" Type="Int32" />
+          <Property Name="CreatedTeacher" Type="Int32" />
+          <NavigationProperty Name="Admin" Relationship="Self.FK_Admin" FromRole="Student" ToRole="Admin" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Teacher" FromRole="Student" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int64" Nullable="false" />
+          <Property Name="DoorNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Area" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pincode" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TeacherPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Creationdate" Type="DateTime" Precision="3" />
+          <Property Name="Createdby" Type="Int32" />
+          <NavigationProperty Name="Admin" Relationship="Self.FK_AdminId" FromRole="Teacher" ToRole="Admin" />
+          <NavigationProperty Name="Students" Relationship="Self.FK_Teacher" FromRole="Teacher" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Update">
+          <Key>
+            <PropertyRef Name="UpdatesId" />
+          </Key>
+          <Property Name="UpdatesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Information" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Updatedby" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="AdminId" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="CreatedAdmin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdminId">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="AdminId" />
+            </Principal>
+            <Dependent Role="Teacher">
+              <PropertyRef Name="Createdby" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="CreatedTeacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CollegeDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <EntitySet Name="Updates" EntityType="Self.Update" />
+          <AssociationSet Name="FK_Admin" Association="Self.FK_Admin">
+            <End Role="Admin" EntitySet="Admins" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdminId" Association="Self.FK_AdminId">
+            <End Role="Admin" EntitySet="Admins" />
+            <End Role="Teacher" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher" Association="Self.FK_Teacher">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CollegeDBModelStoreContainer" CdmEntityContainer="CollegeDBEntities1">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="CollegeDBModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="AdminName" ColumnName="AdminName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="AdminPassword" ColumnName="AdminPassword" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="CollegeDBModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="RollNumber" ColumnName="RollNumber" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="DoorNumber" ColumnName="DoorNumber" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="StudentFee" ColumnName="StudentFee" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="StudentPassword" ColumnName="StudentPassword" />
+                <ScalarProperty Name="CreatedAdmin" ColumnName="CreatedAdmin" />
+                <ScalarProperty Name="CreatedTeacher" ColumnName="CreatedTeacher" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="CollegeDBModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="DoorNumber" ColumnName="DoorNumber" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="TeacherPassword" ColumnName="TeacherPassword" />
+                <ScalarProperty Name="Creationdate" ColumnName="Creationdate" />
+                <ScalarProperty Name="Createdby" ColumnName="Createdby" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Updates">
+            <EntityTypeMapping TypeName="CollegeDBModel.Update">
+              <MappingFragment StoreEntitySet="Updates">
+                <ScalarProperty Name="UpdatesId" ColumnName="UpdatesId" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="Information" ColumnName="Information" />
+                <ScalarProperty Name="Updatedby" ColumnName="Updatedby" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+@{
+    ViewBag.Title = "LogedinAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Session["UserId"] != null)
+{
+    <h4> Hello @Session["Username"].ToString()</h4>
+    <h4> Hello @Session["UserId"].ToString()</h4>
+    <h4> Hello @Session["AdminName"].ToString()</h4>
+
+}
+
+<h2>LogedinAdmin</h2>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LogedinAdmin</title>
+    <a href="@Url.Action("RegisterTeacher","Admin")" class="btn btn-warning">Register Teacher</a>
+    <a href="@Url.Action("LatestUpdates","Admin")" class="btn btn-warning">Latest Update</a>
+    <a href="@Url.Action("RegisterStudent", "Admin")" class="btn btn-danger">Register Student</a>
+</head>
+<body>
+    <div>
+    </div>
+</body>
+</html>
